@@ -1,20 +1,33 @@
 package com.example.personalityquiz
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SummaryActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_summary)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val resultText = intent.getStringExtra("resultText") ?: ""
+        val personalityType = intent.getStringExtra("personalityType") ?: ""
+
+        val textViewResult = findViewById<TextView>(R.id.textViewResult)
+        val imageView = findViewById<ImageView>(R.id.imageView)
+        val ratingBar = findViewById<RatingBar>(R.id.ratingBar)
+
+        textViewResult.text = resultText
+
+        val imageRes = when(personalityType) {
+            "Introwertyk" -> R.drawable.introwertyk
+            "Ekstrawertyk" -> R.drawable.ekstrawertyk
+            "Ambiwertyk"  -> R.drawable.ambiwertyk
+            else -> R.drawable.facesmile
         }
+
+        imageView.setImageResource(imageRes)
     }
 }

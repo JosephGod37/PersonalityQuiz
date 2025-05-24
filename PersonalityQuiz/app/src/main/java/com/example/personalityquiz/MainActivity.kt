@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity() {
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+
+
+
             val datePicker = DatePickerDialog(this, { _, y, m, d ->
                 chosenDate = "$d/${m + 1}/$y"
                 val timePicker = TimePickerDialog(this, { _, hour, minute ->
@@ -97,6 +100,12 @@ class MainActivity : AppCompatActivity() {
                 score >= 20 -> "Ambiwertyk"
                 else -> "Introwertyk"
             }
+            val elapsedMillis = SystemClock.elapsedRealtime() - chronometer.base
+            val elapsedSeconds = (elapsedMillis / 1000) % 60
+            val elapsedMinutes = (elapsedMillis / 1000) / 60
+
+            val timeTaken = String.format("%02d:%02d", elapsedMinutes, elapsedSeconds)
+
 
             val resultText = """
                 Typ osobowości: $personalityType
@@ -105,6 +114,7 @@ class MainActivity : AppCompatActivity() {
                 Towarzyskość: $seekValue
                 Ulubiony kolor: $spinnerValue
                 Data i czas quizu: $chosenDate $chosenTime
+                Czas ukończenia quizu: $timeTaken (mm:ss)
             """.trimIndent()
 
             val intent = Intent(this, SummaryActivity::class.java)
